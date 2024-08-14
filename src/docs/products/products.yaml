@@ -1,0 +1,11 @@
+paths:  
+  /api/products:
+    get:
+      summary: obtiene todos los productos
+      tags: 
+        - Products
+      Responses:
+        "200"
+          description: los Productos fueron recuperados correctamente
+        "500"
+          descripcion: Error al intentar recuperar los productos

@@ -16,6 +16,9 @@ const authRoutes = require('./routes/authRoutes.js');
 const mockingRouter = require('./routes/mockingRouter');
 const { errorHandler } = require('./utils/errorHandler');
 
+const swaggerJsDocs = require('swagger-jsdoc');
+const swaggerUiExpress = require('swagger-ui-express');
+
 const app = express();
 const PORT = process.env.PORT || 8080;
 
@@ -45,6 +48,20 @@ app.set('view engine', 'hbs');
 // Connect to MongoDB
 connectDB();
 
+//swagger docs
+const swaggerOptions = {
+  definition: {
+    openapi: '3.0.1',
+    info: {
+      title: "documentacion",
+      description: "API docs"
+    }
+  },
+  apis: ['./docs/cart/cart.yaml']
+}
+
+const spec = swaggerJsDocs(swaggerOptions);
+
 // Logger middleware
 app.use(requestLogger);
 
@@ -54,6 +71,7 @@ app.use('/api/products', productRoutes);
 app.use('/api/carts', cartRoutes);
 app.use('/auth', authRoutes);
 app.use('/api', mockingRouter);
+app.use('/apidocs', swaggerUiExpress.serve, swaggerUiExpress.setup(spec))
 
 // Error handling middleware
 app.use(errorLogger);

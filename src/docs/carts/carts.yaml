@@ -1,0 +1,11 @@
+paths:
+  /api/carts/:
+    get:
+      summary: obtiene todos los carritos
+      tags: 
+        - Carts
+      Responses:
+        "200"
+          description: los carritos fueron recuperados correctamente
+        "500"
+          descripcion: Error al intentar recuperar los carritos
